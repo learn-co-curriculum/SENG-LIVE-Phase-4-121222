@@ -14,7 +14,7 @@
 ## Deliverables 
 - Review Rest   
 
-| HTTP Verb 	|       Path       	| Controler#Action   	|
+| HTTP Verb 	|       Path       	| Controller#Action   	|
 |-----------	|:----------------:	|--------------------	|
 | GET       	|   /productions   	| productions#index  	|
 | GET       	| /productions/:id 	| productions#show   	|
