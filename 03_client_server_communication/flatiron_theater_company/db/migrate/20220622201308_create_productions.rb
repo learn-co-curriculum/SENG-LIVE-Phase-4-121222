@@ -7,7 +7,7 @@ class CreateProductions < ActiveRecord::Migration[6.1]
       t.float :budget
       t.string :image
       t.string :director
-      t.boolean :ongoing
+      t.boolean :ongoing, default: true
 
       t.timestamps
     end

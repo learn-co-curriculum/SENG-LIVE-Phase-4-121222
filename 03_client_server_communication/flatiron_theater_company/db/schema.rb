@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2022_06_22_201308) do
     t.float "budget"
     t.string "image"
     t.string "director"
-    t.boolean "ongoing"
+    t.boolean "ongoing", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
