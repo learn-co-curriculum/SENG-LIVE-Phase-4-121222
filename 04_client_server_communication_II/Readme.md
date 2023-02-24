@@ -30,7 +30,7 @@
     - To test these errors, and an exception will need to be raised from the request. 
     - In the Production controller, under the update action add ! to update. This will cause it to raise a RecordInvalid exception. 
 
-    - An update request may raise another kind of exception if the record can not be located. Producion.find raises a RecordNotFound exception. 
+    - An update request may raise another kind of exception if the record can not be located. Production.find raises a RecordNotFound exception. 
 
     - Add a new rescue_from at the top of the controller that will invoke a method called `render_not_found` that takes an error as a parameter and will send a response with the not found error. 
 

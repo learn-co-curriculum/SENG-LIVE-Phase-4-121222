@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 
@@ -13,8 +13,20 @@ function EditProductionForm({updateProduction}) {
     description:''
   })
   const [errors, setErrors] = useState([])
-  const {id} = useParams()
+  const params = useParams()
+  const history = useHistory()
+
  //Fetch the production and use it to populate the form
+ useEffect(() => {
+  fetch(`/productions/${params.id}`)
+  .then(res => {
+    if(res.ok){
+      res.json().then(setFormData)
+    } else {
+      res.json().then(json => setErrors(json.error))
+    }
+  })
+ },[])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -25,10 +37,27 @@ function EditProductionForm({updateProduction}) {
   function onSubmit(e){
     e.preventDefault()
     //Update the production
+    // /production/<id>
+    fetch(`/productions/${params.id}`,{
+      method: 'PATCH',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(res => {
+      if(res.ok){
+
+      }else {
+        res.json().then(json => setErrors(Object.entries(json.errors).map(error => `${error[0]}: ${error[1].join(', ')}`)))
+      }
+    })
+
   }
+  console.log(errors)
     return (
       <div className='App'>
-      {errors?errors.map(e => <div>{e}</div>):null}
+        {errors&& errors.map(error => <h3 style={{color:'red'}}>{error.toUpperCase()}</h3>)}
       <Form onSubmit={onSubmit}>
         <label>Title </label>
         <input type='text' name='title' value={formData.title} onChange={handleChange} />
@@ -50,7 +79,6 @@ function EditProductionForm({updateProduction}) {
       
         <input type='submit' value='Update Production' />
       </Form>
-      {errors?errors.map(e => <h2 style={{color:'red'}}>{e.toUpperCase()}</h2>):null}
       </div>
     )
   }

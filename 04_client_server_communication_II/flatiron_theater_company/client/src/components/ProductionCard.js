@@ -10,7 +10,6 @@ function ProductionCard({production}) {
       <div>
       <Link to={`/productions/${id}`}> <h2>{title}</h2></Link>
         <p>{genre}</p>
-        <p>$ {budget}</p>
       </div>
       <img src={image}/>
       </Card>

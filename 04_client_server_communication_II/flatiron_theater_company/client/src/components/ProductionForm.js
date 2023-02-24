@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import styled from 'styled-components'
-
+import {useHistory} from 'react-router-dom'
 
 function ProductionForm({addProduction}) {
   const [formData, setFormData] = useState({
@@ -11,8 +11,8 @@ function ProductionForm({addProduction}) {
     director:'',
     description:''
   })
-
   const [errors, setErrors] = useState([])
+  const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -22,11 +22,31 @@ function ProductionForm({addProduction}) {
   function onSubmit(e){
     e.preventDefault()
     //Create a Production Or render errors from the production
+    // '/productions'
+    fetch('/productions',{
+      method: 'POST',
+      headers: {
+        "Content-type":"application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(res => {
+      if(res.ok){
+        res.json().then(production => {
+          addProduction(production)
+          history.push(`/productions/${production.id}`)
+        })
+
+      } else {
+        res.json().then(json => setErrors(Object.entries(json.errors).map(error => `${error[0]}: ${error[1].join(",  ")}`)))
+      }
+    })
+   
   }
-  
+
     return (
       <div className='App'>
-      {errors?errors.map(e => <div>{e}</div>):null}
+      {errors&& errors.map(error => <h3 style={{color:'red'}}>{error.toUpperCase()}</h3>)}
       <Form onSubmit={onSubmit}>
         <label>Title </label>
         <input type='text' name='title' value={formData.title} onChange={handleChange} />
@@ -46,9 +66,8 @@ function ProductionForm({addProduction}) {
         <label>Description</label>
         <textarea type='text' rows='4' cols='50' name='description' value={formData.description} onChange={handleChange} />
       
-        <input type='submit' value='Update Production' />
+        <input type='submit' value='Create Production' />
       </Form>
-      {errors?errors.map(e => <h2 style={{color:'red'}}>{e.toUpperCase()}</h2>):null}
       </div>
     )
   }

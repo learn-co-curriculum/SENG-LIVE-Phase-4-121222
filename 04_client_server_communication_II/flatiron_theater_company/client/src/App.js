@@ -14,6 +14,16 @@ function App() {
 
 
   //Fetch Productions
+  useEffect(()=>{
+    fetch('/productions')
+    .then(res => {
+      if(res.ok){
+        res.json().then(setProductions)
+      } else {
+        res.json().then(setErrors)
+      }
+    })
+  },[])
 
   const addProduction = (production) => setProductions(current => [...current,production])
 
@@ -29,7 +39,7 @@ function App() {
 
   const deleteProduction = (id) => setProductions(current => current.filter(p => p.id !== id)) 
 
-  if(errors) return <h1>{errors}</h1>
+  if(errors) return <NotFound />
 
   return (
     <>

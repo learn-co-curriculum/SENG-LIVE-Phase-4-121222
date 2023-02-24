@@ -1,6 +1,6 @@
 class ProductionsController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
-
+rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessble_entity
     def index 
         render json: Production.all, status: :ok
     end 
@@ -16,9 +16,6 @@ class ProductionsController < ApplicationController
     end 
 
     def update 
-       #Review error handling and create a rescue for RecordNotFound
-        #Add the ! to update so it raises an exception
-
         production = Production.find(params[:id])
         production.update!(production_params)
         render json: production, status: :accepted
@@ -36,9 +33,13 @@ class ProductionsController < ApplicationController
         params.permit(:title, :genre, :description, :budget, :image, :director, :ongoing)
     end 
 
-    def render_unprocessable_entity(invalid)
-        render json: {errors: invalid.record.errors}, status: :unprocessable_entity
+    def render_not_found record 
+        render json:{error: "Sorry #{record.model} was not found"}, status: :not_found
     end 
 
-    
+    def render_unprocessble_entity invalid 
+        render json:{errors:invalid.record.errors},status: :unprocessable_entity
+    end 
+
+
 end
