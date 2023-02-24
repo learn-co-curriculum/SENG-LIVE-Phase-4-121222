@@ -21,20 +21,7 @@ function ProductionForm({addProduction}) {
 
   function onSubmit(e){
     e.preventDefault()
-    
-    fetch('/productions',{
-      method:'POST',
-      headers: {'Content-Type': 'application/json'},
-      body:JSON.stringify({...formData, ongoing:true})
-    })
-    .then(res => {
-      if(res.ok){
-        res.json().then(addProduction)
-      } else {
-        //Display errors
-        res.json().then(data => setErrors(Object.entries(data.errors).map(e => `${e[0]} ${e[1]}`)))
-      }
-    })
+    //Create a Production Or render errors from the production
   }
   
     return (

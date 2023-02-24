@@ -13,16 +13,7 @@ function App() {
   const [errors, setErrors] = useState(false)
 
 
-  useEffect(() => {
-    fetch('/productions')
-    .then(res => {
-      if(res.ok){
-        res.json().then(setProductions)
-      }else {
-        res.json().then(data => setErrors(data.error))
-      }
-    })
-  },[])
+  //Fetch Productions
 
   const addProduction = (production) => setProductions(current => [...current,production])
 

@@ -1,6 +1,5 @@
 class ProductionsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
     def index 
         render json: Production.all, status: :ok
@@ -33,7 +32,6 @@ class ProductionsController < ApplicationController
 
     private
     
-    #Review strong params and why they are useful with updates
     def production_params
         params.permit(:title, :genre, :description, :budget, :image, :director, :ongoing)
     end 
@@ -42,8 +40,5 @@ class ProductionsController < ApplicationController
         render json: {errors: invalid.record.errors}, status: :unprocessable_entity
     end 
 
-     def render_not_found(error)
-        #confiure the response to work with the error handleng we have on the frontend. 
-        render json: {errors: {error.model => "Not Found"}}, status: :not_found
-    end 
+    
 end

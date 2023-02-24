@@ -14,11 +14,7 @@ function EditProductionForm({updateProduction}) {
   })
   const [errors, setErrors] = useState([])
   const {id} = useParams()
-  useEffect(() => {
-    fetch(`/productions/${id}`)
-    .then(res => res.json())
-    .then(setFormData)
-  },[])
+ //Fetch the production and use it to populate the form
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -28,20 +24,7 @@ function EditProductionForm({updateProduction}) {
 
   function onSubmit(e){
     e.preventDefault()
-    //PATCH to `/productions/${id}`
-    fetch(`/productions/${id}`,{
-      method:'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body:JSON.stringify(formData)
-    })
-    .then(res => {
-      if(res.ok){
-        res.json().then(updateProduction)
-      } else {
-        //Display errors
-        res.json().then(data => setErrors(Object.entries(data.errors).map(e => `${e[0]} ${e[1]}`)))
-      }
-    })
+    //Update the production
   }
     return (
       <div className='App'>

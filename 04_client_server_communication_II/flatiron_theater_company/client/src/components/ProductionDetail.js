@@ -8,32 +8,12 @@ function ProductionDetail({deleteProduction}) {
   
   const params = useParams()
   const history = useHistory()
-  useEffect(()=>{
-    //GET to '/productions/:id'
-    fetch(`/productions/${params.id}`)
-    .then(res => { 
-      if(res.ok){
-        res.json().then(data => setProduction(data))
-      } else {
-        res.json().then(data => setErrors(data.error))
-      }
-    })
-  },[])
+ //Fetch one production 
+ // params.id -> contains the Id for the production
 
   function handleDelete(){
     //DELETE to `/productions/${params.id}`
-    fetch(`/productions/${params.id}`,{
-      method:'DELETE',
-      headers: {'Content-Type': 'application/json'}
-    })
-    .then(res => {
-      if(res.ok){
-        deleteProduction(id)
-        history.push('/')
-      } else {
-        res.json().then(data => setErrors(Object.entries(data.errors).map(e => `${e[0]} ${e[1]}`)))
-      }
-    })
+   
   }
   
 
