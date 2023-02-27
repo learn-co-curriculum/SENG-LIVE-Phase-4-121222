@@ -7,11 +7,23 @@ p3 = Production.create(title: 'Carmen', genre: 'Opera', director:'Georges Bizet'
 
 p3 = Production.create(title: 'Hamilton', genre: 'Musical', director:'Lin-Manuel Miranda', description:'An American Musical is a sung-and-rapped-through musical by Lin-Manuel Miranda. It tells the story of American Founding Father Alexander Hamilton.', budget: 400000.00, image:'https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Hamilton-poster.jpg/220px-Hamilton-poster.jpg', ongoing:false)
 
-
 u1 = User.create(name:'ix', email:'email@gmail.com', password:'1234')
 u2 = User.create(name:'rose', email:'rose@gmail.com', password:'1234')
+20.times{User.create(name:Faker::Name.name, email:Faker::Internet.free_email )}
 
-CastMember.create(name:"Lily-Mai Harding", role:"Hamlet", production:Production.find_by(title:'Hamlet'))
+hamlet_roles = ['Hamlet', 'Ophelia', 'Polonius', 'Laertes', 'Horatio', 'Gertrude', 'Ghost' ]
+hamlet_roles.each{|hr| CastMember.create(name:Faker::Name.name, role:hr, production:Production.find_by(title:'Hamlet'))}
+
+cats_roles = ['Mr. Mistoffelees', 'Bombalurina', 'Rumpletezer', 'Grizabella']
+cats_roles.each{|cr| CastMember.create(name:Faker::Name.name, role:cr, production:Production.find_by(title:'Cats'))}
+
+carmen_roles = ['Carmen', 'Escamillo', 'Jose', 'Mercedes', 'Dancaire']
+carmen_roles.each{|cr|CastMember.create(name:Faker::Name.name, role:cr, production:Production.find_by(title:'Carmen'))}
+
+hamilton_roles = ['Alexander Hamilton', 'King George III', 'Marquis de Lafayett', 'Angelica Schuyler Church', 'Peggy Schuyler', 'Thomas Jefferson']
+hamilton_roles.each{|hr|CastMember.create(name:Faker::Name.name, role:hr, production:Production.find_by(title:'Hamilton'))}
+
+60.times{Ticket.create(user: User.all.sample, production: Production.all.sample, price:65.00)}
 
 Ticket.create(user:u1, production:p2, price:65.00)
 Ticket.create(user:u2, production:p2, price:65.00)

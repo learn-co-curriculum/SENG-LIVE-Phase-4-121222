@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_11_200128) do
-
-  create_table "cast_members", force: :cascade do |t|
-    t.string "name"
-    t.string "role"
-    t.integer "production_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["production_id"], name: "index_cast_members_on_production_id"
-  end
+ActiveRecord::Schema.define(version: 2022_06_22_201308) do
 
   create_table "productions", force: :cascade do |t|
     t.string "title"
@@ -33,25 +24,4 @@ ActiveRecord::Schema.define(version: 2022_07_11_200128) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "tickets", force: :cascade do |t|
-    t.integer "production_id", null: false
-    t.integer "user_id", null: false
-    t.float "price"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["production_id"], name: "index_tickets_on_production_id"
-    t.index ["user_id"], name: "index_tickets_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  add_foreign_key "cast_members", "productions"
-  add_foreign_key "tickets", "productions"
-  add_foreign_key "tickets", "users"
 end
