@@ -1,4 +1,9 @@
 class Production < ApplicationRecord
+    has_many :cast_members
+
+    has_many :tickets
+    has_many :users, through: :tickets
+
     validates_presence_of :title, :budget, :director, :description, :image, :genre
     validates :title, length: {maximum:50}
     validates :description, length:{in: 5...250}

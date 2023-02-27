@@ -31,7 +31,7 @@ function ProductionForm({handlePost, addProduction}) {
         res.json().then(addProduction)
       } else {
         //Display errors
-        res.json().then(data => setErrors(Object.entries(data.errors).map(e => `${e[0]} ${e[1]}`)))
+        res.json().then(data => setErrors(data.errors))
       }
     })
   }
@@ -57,7 +57,7 @@ function ProductionForm({handlePost, addProduction}) {
         <label>Description</label>
         <textarea type='text' rows='4' cols='50' name='description' value={formData.description} onChange={handleChange} />
       
-        <input type='submit' value='Update Production' />
+        <input type='submit' value='Create Production' />
       </Form>
       {errors?errors.map(e => <h2 style={{color:'red'}}>{e.toUpperCase()}</h2>):null}
       </div>
