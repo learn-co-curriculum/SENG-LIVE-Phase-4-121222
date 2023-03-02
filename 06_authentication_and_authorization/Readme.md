@@ -11,7 +11,7 @@
 - [ ] Observe how to protect client-side routes from unauthorized Users
 - [ ] Observe how to protect server-side routes from unauthorized Users using before_actions
 
-User -< Ticket > Production
+User -< Ticket >- Production
 ![associations.png](assets/associations_fixed.png)
 
 ## Deliverables
@@ -31,7 +31,7 @@ Note: adding BCrypt only takes a few lines of code; the following is to explain 
 
 - Demo the following in the rails console
     - `cow1 = BCrypt::Password.create('cow')`
-    - BCrypt creates an instance of a hashed password wehn given a string.
+    - BCrypt creates an instance of a hashed password when given a string.
     -  The hash can be saved in the DB to identify the user later. 
     - `cow2 = BCrypt::Password.create('cow')`
     - `cow1 === cow2` #false

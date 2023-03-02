@@ -15,9 +15,24 @@ function App() {
   const [productions, setProductions] = useState([])
   const [errors, setErrors] = useState(false)
   const [cart, setCart] = useState([])
+  const [user, setUser] = useState(null)
 
 
   useEffect(() => {
+    fetch('/authorized')
+    .then(res => {
+      if(res.ok){
+        res.json().then(user => {
+          setUser(user)
+          fetchProductions()
+        })
+      } else {
+        setUser(null)
+      }
+    })
+  },[])
+
+  const fetchProductions = () => {
     fetch('/productions')
     .then(res => {
       if(res.ok){
@@ -26,7 +41,7 @@ function App() {
         res.json().then(data => setErrors(data.error))
       }
     })
-  },[])
+  }
 
   const addProduction = (production) => setProductions(current => [...current,production])
 
@@ -43,12 +58,19 @@ function App() {
   const deleteProduction = (id) => setProductions(current => current.filter(p => p.id !== id)) 
 
   const addToCart = (ticket) => setCart(cart => [...cart, ticket])
+  const updateUser = (user) => setUser(user)
   if(errors) return <h1>{errors}</h1>
-
+  if(!user) return (
+  <>
+    <GlobalStyle />
+    <Navigation cart={cart} updateUser={updateUser}/>
+    <Login updateUser={updateUser}/>
+  </>
+  )
   return (
     <>
     <GlobalStyle />
-    <Navigation cart={cart}/>
+    <Navigation cart={cart} updateUser={updateUser}/>
       <Switch>
 
       <Route  path='/productions/new'>
@@ -64,7 +86,7 @@ function App() {
       </Route>
 
       <Route path='/users/new'>
-        <SignUp />
+        <SignUp updateUser={updateUser}/>
       </Route>
 
       <Route path='/users/:id'>
@@ -72,7 +94,7 @@ function App() {
       </Route>
 
       <Route path='/login'>
-        <Login />
+        <Login updateUser={updateUser}/>
       </Route>
 
     

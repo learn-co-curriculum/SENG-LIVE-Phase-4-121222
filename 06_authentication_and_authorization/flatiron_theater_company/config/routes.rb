@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   # resources :cast_members
   resources :productions, only: [ :index, :show, :create, :update, :destroy]
   # Custome Route
-
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  get '/authorized', to: 'users#show'
   
 
 end

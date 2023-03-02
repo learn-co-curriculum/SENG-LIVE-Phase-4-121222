@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import {Form} from '../styled/Form'
 
-function Login() {
+function Login({updateUser}) {
     const [formData, setFormData] = useState({
         name:'',
         password:''
@@ -27,10 +27,11 @@ function Login() {
         .then(res => {
             if(res.ok){
                 res.json().then(user => {
+                    updateUser(user)
                     history.push(`/users/${user.id}`)
                 })
             }else {
-                res.json().then(json => setErrors(Object.entries(json.errors)))
+                res.json().then(json => setErrors(json.error))
             }
         })
        
@@ -56,7 +57,7 @@ function Login() {
        
         <input type='submit' value='Log in!' />
       </Form>
-      {errors?<h2>{error}</h2>:null}
+      {errors?<h2>{errors}</h2>:null}
         </>
     )
 }

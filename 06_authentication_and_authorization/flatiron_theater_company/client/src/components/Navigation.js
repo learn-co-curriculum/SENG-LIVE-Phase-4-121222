@@ -1,11 +1,22 @@
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
-function Navigation() {
+function Navigation({updateUser}) {
  const [menu, setMenu] = useState(false)
-  
+ const history = useHistory()
+  const handleLogout = () => {
+    fetch('/logout',{
+      method:'DELETE'
+    })
+    .then(res => {
+      if(res.ok){
+        updateUser(null)
+        history.push('/login')
+      }
+    })
+  }
     return (
         <Nav> 
          <NavH1>Flatiron Theater Company</NavH1>
@@ -21,6 +32,7 @@ function Navigation() {
             <li><Link to='/login'>Login</Link></li>
             <li><Link to='/productions/new'>New Production</Link></li>
             <li><Link to='/'> Home</Link></li>
+            <button onClick={handleLogout}>Logout</button>
            </ul>
            }
          </Menu>
