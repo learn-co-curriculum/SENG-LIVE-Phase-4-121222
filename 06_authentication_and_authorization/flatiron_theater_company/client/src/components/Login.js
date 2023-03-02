@@ -5,7 +5,6 @@ import {Form} from '../styled/Form'
 function Login() {
     const [formData, setFormData] = useState({
         name:'',
-        email:'',
         password:''
     })
     const [errors, setErrors] = useState([])
@@ -50,14 +49,14 @@ function Login() {
         <input type='text' name='name' value={name} onChange={handleChange} />
       
         <label>
-         Email
+         Password
          </label>
-        <input type='text' name='email' value={email} onChange={handleChange} />
+        <input type='password' name='password' value={email} onChange={handleChange} />
        
        
         <input type='submit' value='Log in!' />
       </Form>
-      {errors?errors.map(e => <div>{e[0]+': ' + e[1]}</div>):null}
+      {errors?<h2>{error}</h2>:null}
         </>
     )
 }
